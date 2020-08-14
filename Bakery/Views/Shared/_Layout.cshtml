@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Noel's Bakery</title>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css'>
+    <link rel="stylesheet" type="text/css" href="~/css/styles.css">
+  </head>
+  <body>
+    <div class="container">
+    <header id="header" class=" d-flex align-items-center header-transparent">
+      <div class="container d-flex align-items-center">
+        <div class="logo mr-auto">
+          <h1 class="text-light"><a href="index.html"><span></span></a></h1>
+        </div>
+  
+        <nav class="nav-menu d-none d-lg-block">
+          <ul>
+            <li class="home-button text-center"><a href="/">Home</a></li>
+            <li><a href="/Treats">Treats</a></li>
+            <li><a href="/Flavors">Flavors</a></li>
+          </ul>
+        </nav>
+    </header>
+    @RenderBody()
+    </div>
+  </body>
+</html>
