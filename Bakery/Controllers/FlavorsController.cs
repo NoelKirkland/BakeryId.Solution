@@ -67,7 +67,7 @@ namespace Bakery.Controllers
       {
         return RedirectToAction("Details", new {id = id});
       }
-      ViewBag.TreatId = new SelectList(_db.Treats, "TreatId", "Name"); // thing that comes after ViewBag. is the name of your viewbag. Selectlist object takes 3 arguments: all the data that you want included, what value you want this clickable 'Name' to have, what you want displayed to user
+      ViewBag.TreatId = new SelectList(_db.Treats, "TreatId", "Name");
       return View(thisFlavor);
     }
 
