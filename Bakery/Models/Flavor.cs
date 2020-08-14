@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 
-public namespace Bakery.Models
+namespace Bakery.Models
 {
   public class Flavor
   {
     public Flavor()
     {
-      this.Treat = HashSet<FlavorTreat>();
+      this.Treats = new HashSet<FlavorTreat>();
     }
 
     public int FlavorId { get; set; }
     public string Name { get; set; }
-    public virtual ICollections<FlavorTreat> Flavors { get; set; }
+    public virtual ICollection<FlavorTreat> Treats { get; set; }
   }
 }

@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 
-public namespace Bakery.Models
+namespace Bakery.Models
 {
   public class Treat
   {
     public Treat()
     {
-      this.Flavor = Hashset<FlavorTreat>();
+      this.Flavors = new HashSet<FlavorTreat>();
     }
 
     public int TreatId { get; set; }
