@@ -1,17 +1,17 @@
-using Microsoft.AspNetCore.Mvc;
-using ToDoList.Models;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
-using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Bakery.Models;
 
 namespace Bakery.Controllers
 {
-  public class FlavorsController : Controllers
+  public class FlavorsController : Controller
   {
     private readonly BakeryContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
@@ -47,7 +47,7 @@ namespace Bakery.Controllers
 
     public ActionResult Details(int id) //Maybe change user ViewBag requirements
     {
-      Flavors thisFlavor = _db.Flavors
+      Flavor thisFlavor = _db.Flavors
       .Include(flavor => flavor.Treats)
       .ThenInclude(join => join.Treat)
       .Include(flavor => flavor.User)
@@ -133,6 +133,15 @@ namespace Bakery.Controllers
       {
       _db.FlavorTreat.Add(new FlavorTreat() { TreatId = TreatId, FlavorId = flavor.FlavorId });
       }
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public ActionResult DeleteTreat(int joinId)
+    {
+      var joinEntry = _db.FlavorTreat.FirstOrDefault(entry => entry.FlavorTreatId == joinId);
+      _db.FlavorTreat.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
