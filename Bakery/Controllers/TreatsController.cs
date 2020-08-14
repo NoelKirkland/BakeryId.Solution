@@ -11,7 +11,7 @@ using Bakery.Models;
 
 namespace Bakery.Controllers
 {
-  public class TreatsController : Controllers
+  public class TreatsController : Controller
   {
     private readonly BakeryContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
@@ -80,6 +80,38 @@ namespace Bakery.Controllers
         _db.FlavorTreat.Add(new FlavorTreat() { FlavorId = FlavorId, TreatId = treat.TreatId}); 
       }
       _db.Entry(treat).State = EntityState.Modified; 
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    [Authorize]
+    public async Task<ActionResult> Delete(int id)
+    {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      
+      Treat thisTreat = _db.Treats.Where(entry => entry.User.Id == currentUser.Id).FirstOrDefault(treats => treats.TreatId == id);
+      if (thisTreat == null)
+      {
+        return RedirectToAction("Details", new {id = id});
+      }
+      return View(thisTreat);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      Treat thisTreat = _db.Treats.FirstOrDefault(treats => treats.TreatId == id);
+      _db.Treats.Remove(thisTreat);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public ActionResult DeleteFlavor(int joinId)
+    {
+      var joinEntry = _db.FlavorTag.FirstOrDefault(entry => entry.FlavorTagId == joinId);
+      _db.FlavorTag.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
