@@ -44,5 +44,17 @@ namespace Bakery.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+    public ActionResult Details(int id) //Maybe change user ViewBag requirements
+    {
+      Flavors thisFlavor = _db.Flavors
+      .Include(flavor => flavor.Treats)
+      .ThenInclude(join => join.Treat)
+      .Include(flavor => flavor.User)
+      .FirstOrDefault(flavor => flavor.FlavorId == id);
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ViewBag.IsCurrentUser = userId != null ? userId == thisFlavor.User.Id : false;
+      return View(thisFlavor);
+    }
   }
 }
