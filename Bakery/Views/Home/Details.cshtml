@@ -1,0 +1,33 @@
+@{
+  Layout = "_Layout";
+}
+
+@using Bakery.Models;
+
+<h1>All treats and flavors</h1>
+<hr/>
+@if(ViewBag.flavorsBag.Count == 0)
+{
+  <h3>No flavors have been added yet!</h3>
+}
+else
+{
+  <h3>Flavors:</h3>
+  @foreach (Flavor flavor in ViewBag.flavorsBag)
+  {
+    <li>@Html.ActionLink($"{flavor.Name}", "Details", "Flavors", new { id = flavor.FlavorId })</li>
+  }
+}
+<br>
+@if(ViewBag.treatsBag.Count == 0)
+{
+  <h3>No treats have been added yet!</h3>
+}
+else
+{
+  <h3>Treats:</h3>
+  @foreach (Treat treat in ViewBag.treatsBag)
+  {
+    <li>@Html.ActionLink($"{treat.Name}", "Details", "Treats", new { id = treat.TreatId })</li>
+  }
+}

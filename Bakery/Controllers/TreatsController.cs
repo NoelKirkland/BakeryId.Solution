@@ -75,7 +75,9 @@ namespace Bakery.Controllers
     [HttpPost]
     public ActionResult Edit(Treat treat, int FlavorId)
     {
-      if (FlavorId != 0)
+      var existingConnection = _db.FlavorTreat.FirstOrDefault(join => join.TreatId == treat.TreatId && join.FlavorId == FlavorId);
+
+      if (existingConnection == null && FlavorId != 0)
       {
         _db.FlavorTreat.Add(new FlavorTreat() { FlavorId = FlavorId, TreatId = treat.TreatId}); 
       }
@@ -138,9 +140,12 @@ namespace Bakery.Controllers
       return RedirectToAction("Index");
     }
 
+    [Authorize]
     [HttpPost]
-    public ActionResult DeleteFlavor(int joinId)
+    public async Task<ActionResult> DeleteFlavor(int joinId)
     {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
       var joinEntry = _db.FlavorTreat.FirstOrDefault(entry => entry.FlavorTreatId == joinId);
       _db.FlavorTreat.Remove(joinEntry);
       _db.SaveChanges();
