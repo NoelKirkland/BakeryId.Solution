@@ -2,7 +2,7 @@
   Layout = "_Layout";
 }
 
-@model ToDoList.Models.Treat;
+@model Bakery.Models.Treat;
 
 <h2>Treat Details</h2>
 <hr />
@@ -18,7 +18,7 @@ else
   <ul>
   @foreach(var join in Model.Flavors)
   {
-    <li>@join.Flavor.Description</li>
+    <li>@join.Flavor.Name</li>
   }
   </ul>
 }
