@@ -1,0 +1,27 @@
+@{
+  Layout = "_Layout";
+}
+
+@model ToDoList.Models.Treat;
+
+<h2>Treat Details</h2>
+<hr />
+<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
+<br>
+@if(@Model.Flavors.Count == 0)
+{
+  <p>This treat does not have any associated flavors</p>
+}
+else
+{
+  <h4>flavors that this treat is associated with:</h4>
+  <ul>
+  @foreach(var join in Model.Flavors)
+  {
+    <li>@join.Flavor.Description</li>
+  }
+  </ul>
+}
+<br>
+<p>@Html.ActionLink("Edit Treat", "Edit", new { id = Model.TreatId })</p>
+<p>@Html.ActionLink("Delete Treat", "Delete", new { id = Model.TreatId })</p>
