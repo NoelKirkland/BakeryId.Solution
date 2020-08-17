@@ -94,5 +94,3 @@ If there are any issues or questions contact me at noelkirkland@gmail.com
 ### License <a name="5"></a>
 
 *This project uses the following license: [MIT](https://opensource.org/licenses/MIT)*
-
-Copyright (c) 2020 **_Noel Kirkland LLC_**
